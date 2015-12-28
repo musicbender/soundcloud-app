@@ -4,9 +4,9 @@ SC.initialize({
 });
 
 $(document).ready(function(){
-
+    console.log(SC);
+    //authenticate and display users information
     $('.connect').click(function(e){
-        console.log('clicked');
         e.preventDefault();
         SC.connect(function(){
             SC.get('/me', function(me){
@@ -20,6 +20,16 @@ $(document).ready(function(){
             });
         });
     });
+    
+    var track_url = 'https://soundcloud.com/patjacobsmusic/ragnarok',
+        player = $('.player');
+    
+   SC.oEmbed(track_url, { auto_play: false, iframe: true, maxwidth: 800, maxheight: 200 }, function(oEmbed) {
+  console.log('oEmbed response: ', oEmbed);
+       player.html(oEmbed.html);
+   }); 
+    
+    
 
     
     
