@@ -1,6 +1,6 @@
 SC.initialize({
     client_id: 'a025d7ac04682146e46fab7dec6d02bd',
-    redirect_uri: 'http://sandbox.patjacobsmusic.com/callback.html'
+    redirect_uri: 'http://musicbender.github.io/soundcloud-app/callback.html'
 });
 
 $(document).ready(function(){
