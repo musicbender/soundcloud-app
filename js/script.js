@@ -10,9 +10,7 @@ $(document).ready(function(){
     $('.connect').click(function(e) {
         //e.preventDefault();
         
-        SC.connect().catch(function(error) {
-            console.log('oh no', error);
-        }).then(function() {
+        SC.connect().then(function() {
             console.log('PASSED');
             return SC.get('/me');
         }).then(function(me) {
