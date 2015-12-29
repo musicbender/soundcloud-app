@@ -15,11 +15,3 @@ html, body {
     font-weight: 200;
 }
 
-.player {
-    margin: 0 auto;
-    text-align: center;
-}
-
-#play:hover {
-    cursor: pointer;
-}

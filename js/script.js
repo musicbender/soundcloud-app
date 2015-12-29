@@ -1,7 +1,21 @@
-SC.initialize({
-    client_id: 'a025d7ac04682146e46fab7dec6d02bd',
-    redirect_uri: 'http://musicbender.github.io/soundcloud-app/callback.html'
-});
+function localInit() {
+    SC.initialize({
+        client_id: 'a0fbfae5a13e2f9785418bede98cad8d',
+        redirect_uri: 'http://127.0.0.1:49392/callback.html'
+    });
+}
+
+function githubInit() {
+        SC.initialize({
+        client_id: 'a025d7ac04682146e46fab7dec6d02bd',
+        redirect_uri: 'http://musicbender.github.io/soundcloud-app/callback.html'
+    });
+}
+
+//WHICH INIT: LOCAL FOR DEV or PUBLISHED ON GITHUB?
+localInit();
+
+
 
 $(document).ready(function(){
     console.log(SC);
@@ -26,21 +40,31 @@ $(document).ready(function(){
             console.log(error);
         });
     }); 
- /*   
-SC.connect().then(function() {
-  return SC.get('/me');
-}).then(function(me) {
-  alert('Hello, ' + me.username);
-});*/
     
-    var track_url = 'https://soundcloud.com/patjacobsmusic/ragnarok',
-        playerDiv = $('.player');
+    var getUserMedia = navigator.getUserMedia ||
+                   navigator.webkitGetUserMedia ||
+                   navigator.mozGetUserMedia;
+    var audioContext = new (AudioContext || webkitAudioContext || mozAudioCntext)();
+    var recorder;
+    var userMediaStream;
     
-    $('#play').click(function(){
-        SC.stream(track_url).then(function(player){
-            console.log(player);
-            player.start();
-        });
+    getUserMedia.call(navigator, {video: false, audio: true}, function(stream){
+        userMediaStream = stream;
+    }, function(error){
+      alert('There was a problem in getting the video and audio stream from your device. Did you block the access?');
+    });
+
+    $('.record-btn').click(function(){
+        var streamSource = audioContext.createMediaStreamSource(userMediaStream);
+        recorder = new SC.Recorder({context: audioContext, source: streamSource});
+        console.log(recorder);
+        recorder.start();
+    });
+
+    $('.stop-btn').click(function() {
+        recorder.stop();
+        console.log('stop');
+        recorder.play();
     });
     
 
