@@ -1,3 +1,4 @@
+//Soundcloud Initialization
 function localInit() {
     SC.initialize({
         client_id: 'a0fbfae5a13e2f9785418bede98cad8d',
@@ -12,12 +13,15 @@ function githubInit() {
     });
 }
 
-//WHICH INIT: LOCAL FOR DEV or PUBLISHED ON GITHUB?
-localInit();
-
-
+localInit(); //WHICH INIT: LOCAL FOR DEV or PUBLISHED ON GITHUB?
 
 $(document).ready(function(){
+    var getUserMedia = navigator.getUserMedia ||
+                   navigator.webkitGetUserMedia ||
+                   navigator.mozGetUserMedia;
+    var audioContext = new (AudioContext || webkitAudioContext || mozAudioCntext)();
+    var recorder;
+    var userMediaStream;
     console.log(SC);
     
     //authenticate and display users information
@@ -29,7 +33,6 @@ $(document).ready(function(){
             return SC.get('/me');
         }).then(function(me) {
                 console.log('DEBUG:' + me);
-            
                 $('#username').text(me.username);
                 $('#first-name').text(me.first_name);
                 $('#last-name').text(me.last_name);
@@ -41,29 +44,30 @@ $(document).ready(function(){
         });
     }); 
     
-    var getUserMedia = navigator.getUserMedia ||
-                   navigator.webkitGetUserMedia ||
-                   navigator.mozGetUserMedia;
-    var audioContext = new (AudioContext || webkitAudioContext || mozAudioCntext)();
-    var recorder;
-    var userMediaStream;
+
     
+    //Set up getUserMedia
     getUserMedia.call(navigator, {video: false, audio: true}, function(stream){
         userMediaStream = stream;
     }, function(error){
       alert('There was a problem in getting the video and audio stream from your device. Did you block the access?');
     });
 
+    //Press buttons and using SC.Recorder
     $('.record-btn').click(function(){
         var streamSource = audioContext.createMediaStreamSource(userMediaStream);
         recorder = new SC.Recorder({context: audioContext, source: streamSource});
         console.log(recorder);
         recorder.start();
+        setTimeout(function(){
+            recorder.stop();
+            recorder.play();
+        }, 5000)
     });
-
     $('.stop-btn').click(function() {
         recorder.stop();
-        console.log('stop');
+    });
+    $('.play-btn').click(function() {
         recorder.play();
     });
     

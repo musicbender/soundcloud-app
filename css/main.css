@@ -15,3 +15,6 @@ html, body {
     font-weight: 200;
 }
 
+.m-btn:hover {
+    cursor: pointer;
+}
