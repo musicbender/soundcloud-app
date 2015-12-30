@@ -63,7 +63,7 @@ $(document).ready(function(){
         setTimeout(function(){
             recorder.stop();
             recorder.play();
-        }, 10000)
+        }, 1000)
     });
     $('.stop-btn').click(function() {
         recorder.stop();
@@ -72,26 +72,71 @@ $(document).ready(function(){
         recorder.play();
     });
     $('.upload-btn').click(function() {
-        console.log('clicked');
+        console.log('upload clicked');
+        var thisTrack;
+        
         recorder.getWAV().then(function(wav){
             var upload = SC.upload({
                 file: wav,
-                sharing: 'private',
+                sharing: 'public',
                 title: 'My Recording 1',
             });
-            $('.progress-bar').text('Uploading...<span class="progress"></span>');
+            $('.progress-bar').text('Uploading...');
             upload.request.addEventListener('progress', function(e){
                 var progressPercent = (e.loaded / e.total) * 100;
                 console.log('progress: ', progressPercent + '%');
-                $('.progress').text(progressPercent + '%');
+                $('.progress-bar').text('Finished!');
             });
             upload.then(function(track){
+                console.log('TRACK: ' + track + track.permalink_url);
+                
+                embedTrack(track, upload);
+                
+                $('.track').append('<a href="' + track.permalink_url + '">' + track.title + '</a>')
+                
+
+                
                 alert('Upload is done! Check your sound at ' + track.permalink_url);
             });
         }).catch(function(){
             console.log('Upload Failed :(');
         });
     });
+    
+    
+    function embedTrack(track, upload) {
+        var p = $('.progress-bar');
+        upload.onreadystatechange = function() {
+            if (upload.readyState == 4 && upload.status == 200) { //doesn't work yet
+                p.text('Finished processing!');
+                SC.oEmbed(track.permalink_url, {
+                      auto_play: false
+                    }).then(function(embed){
+                      console.log('oEmbed response: ', embed);
+                    }); 
+            }
+            else {
+                p.text('Processing audio...')
+            }
+        }
+        /*if (track.state = "processing"){
+            p.text('Processing audio...')
+        }
+        else if (track.state = "finished"){
+            p.text('Finished processing!');
+            SC.oEmbed(track.permalink_url, {
+                  auto_play: false
+                }).then(function(embed){
+                  console.log('oEmbed response: ', embed);
+            });
+        }
+        else {
+            p.text('Posting track failed :(');
+        }*/
+    }
+        
+
+    
     
 
     
