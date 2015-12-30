@@ -58,6 +58,7 @@ $(document).ready(function(){
         var streamSource = audioContext.createMediaStreamSource(userMediaStream);
         recorder = new SC.Recorder({context: audioContext, source: streamSource});
         console.log(recorder);
+        console.log(SC.Recorder);
         recorder.start();
         setTimeout(function(){
             recorder.stop();
@@ -69,6 +70,21 @@ $(document).ready(function(){
     });
     $('.play-btn').click(function() {
         recorder.play();
+    });
+    $('.upload-btn').click(function() {
+        console.log('clicked');
+        recorder.getWAV().then(function(wav){
+            var upload = SC.upload({
+                file: wav,
+                title: 'My Recording 1',
+            }); //.catch(console.log("couldn't turn it into a wav blob"));
+            /*upload.request.addEventListener('progress', function(e){
+                console.log('progress: ', (e.loaded / e.total) * 100, '%');
+            });*/
+            upload.then(function(track){
+                alert('Upload is done! Check your sound at ' + track.permalink_url);
+            });
+        });
     });
     
 
