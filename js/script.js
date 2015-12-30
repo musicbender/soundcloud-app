@@ -63,7 +63,7 @@ $(document).ready(function(){
         setTimeout(function(){
             recorder.stop();
             recorder.play();
-        }, 5000)
+        }, 10000)
     });
     $('.stop-btn').click(function() {
         recorder.stop();
@@ -76,14 +76,20 @@ $(document).ready(function(){
         recorder.getWAV().then(function(wav){
             var upload = SC.upload({
                 file: wav,
+                sharing: 'private',
                 title: 'My Recording 1',
-            }); //.catch(console.log("couldn't turn it into a wav blob"));
-            /*upload.request.addEventListener('progress', function(e){
-                console.log('progress: ', (e.loaded / e.total) * 100, '%');
-            });*/
+            });
+            $('.progress-bar').text('Uploading...<span class="progress"></span>');
+            upload.request.addEventListener('progress', function(e){
+                var progressPercent = (e.loaded / e.total) * 100;
+                console.log('progress: ', progressPercent + '%');
+                $('.progress').text(progressPercent + '%');
+            });
             upload.then(function(track){
                 alert('Upload is done! Check your sound at ' + track.permalink_url);
             });
+        }).catch(function(){
+            console.log('Upload Failed :(');
         });
     });
     
