@@ -101,14 +101,38 @@ $(document).ready(function(){
     
     function embedTrack(track) {
         var elementLoc = $('.track');
-        SC.oEmbed(track.permalink_url, {
-            auto_play: true,
-            iframe: true,
-            element: elementLoc
-        }).then(function(embed){
-          console.log('oEmbed response: ', embed);
-            elementLoc.html(oEmbed.html);
-        });
+        var trackState = track.state;
+        var testState;
+        do {
+            var checkTrack = SC.get(track.id).then(function(t){
+                testState = t.state;
+            }).catch(function(){
+                alert('nope')
+            });
+                trackState = testState;
+                console.log('poopers');
+        }
+        while (trackState == "processing");
+        
+        if (trackState == "finished"){
+            SC.oEmbed(track.permalink_url, {
+                auto_play: true,
+                iframe: true,
+                element: elementLoc
+            }).then(function(embed){
+              console.log('oEmbed response: ', embed);
+                elementLoc.html(oEmbed.html);
+            });
+        }
+        if (trackState == "failed"){
+            alert('failed processing :(');
+        }
+        
+        console.log(track.state);
+        
+        
+        
+
     }
     
 
