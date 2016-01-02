@@ -44,8 +44,6 @@ $(document).ready(function(){
         });
     }); 
     
-
-    
     //Set up getUserMedia
     getUserMedia.call(navigator, {video: false, audio: true}, function(stream){
         userMediaStream = stream;
@@ -65,75 +63,55 @@ $(document).ready(function(){
             recorder.play();
         }, 1000)
     });
+    //stop recording
     $('.stop-btn').click(function() {
         recorder.stop();
     });
+    //playback recording
     $('.play-btn').click(function() {
         recorder.play();
     });
+    //Upload into soundcloud
     $('.upload-btn').click(function() {
         console.log('upload clicked');
         var thisTrack;
         
-        recorder.getWAV().then(function(wav){
+        recorder.getWAV().then(function(wav){ //turn into Blob wav
             var upload = SC.upload({
                 file: wav,
                 sharing: 'public',
-                title: 'My Recording 1',
+                title: 'Soundcloud API Test',
             });
-            $('.progress-bar').text('Uploading...');
-            upload.request.addEventListener('progress', function(e){
-                var progressPercent = (e.loaded / e.total) * 100;
-                console.log('progress: ', progressPercent + '%');
-                $('.progress-bar').text('Finished!');
-            });
-            upload.then(function(track){
-                console.log('TRACK: ' + track + track.permalink_url);
-                
-                embedTrack(track, upload);
-                
+            $('.progress-bar').text('Uploading...'); 
+            upload.then(function(track){ //upload
+                console.log('TRACK UPLOADED: ' + track + track.permalink_url);
                 $('.track').append('<a href="' + track.permalink_url + '">' + track.title + '</a>')
-                
-
-                
                 alert('Upload is done! Check your sound at ' + track.permalink_url);
+                embedTrack(track);
+            });
+            upload.request.addEventListener('progress', function(event){ //show progress
+                var progressPercent = (event.loaded / event.total) * 100;
+                console.log('Progress: ', progressPercent + '%' + 'loaded: ' + event.loaded);
+                $('.progress-bar').text('Progress: ' + progressPercent + '%');;
             });
         }).catch(function(){
             console.log('Upload Failed :(');
         });
     });
     
-    
-    function embedTrack(track, upload) {
-        var p = $('.progress-bar');
-        upload.onreadystatechange = function() {
-            if (upload.readyState == 4 && upload.status == 200) { //doesn't work yet
-                p.text('Finished processing!');
-                SC.oEmbed(track.permalink_url, {
-                      auto_play: false
-                    }).then(function(embed){
-                      console.log('oEmbed response: ', embed);
-                    }); 
-            }
-            else {
-                p.text('Processing audio...')
-            }
-        }
-        /*if (track.state = "processing"){
-            p.text('Processing audio...')
-        }
-        else if (track.state = "finished"){
-            p.text('Finished processing!');
-            SC.oEmbed(track.permalink_url, {
-                  auto_play: false
-                }).then(function(embed){
-                  console.log('oEmbed response: ', embed);
-            });
-        }
-        else {
-            p.text('Posting track failed :(');
-        }*/
+    function embedTrack(track) {
+        var elementLoc = $('.track');
+        SC.oEmbed(track.permalink_url, {
+            auto_play: true,
+            iframe: true,
+            element: elementLoc
+        }).then(function(embed){
+          console.log('oEmbed response: ', embed);
+            elementLoc.html(oEmbed.html);
+        });
     }
+    
+
         
 
     
