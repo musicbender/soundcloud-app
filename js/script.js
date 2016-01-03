@@ -105,8 +105,11 @@ $(document).ready(function(){
         if (finished){
             embed(track);
         }
+        else if (!finished){
+            console.log('not finished');
+        }
         else {
-            console.log('displayTrack: false');
+            console.log('I dunno');
         }
     }
     
@@ -115,7 +118,7 @@ $(document).ready(function(){
         SC.get(trackID).then(function(t){  //permalink_url & uri is 406. id & permalink is 404
                 if (t.state == "processing"){
                    setTimeout(function(){
-                       embedTrack(track);
+                       checkState(track);
                    }, 2000);
                     console.log("poop");
                     }
