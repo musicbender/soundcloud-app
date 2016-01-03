@@ -86,9 +86,9 @@ $(document).ready(function(){
             upload.then(function(track){ //upload
                 $('.track').append('<a href="' + track.permalink_url + '">' + track.title + '</a>')
                 alert('Upload is done! Check your sound at ' + track.permalink_url);
-                
-                setTimeout(function(){checkState(track);}, 10000);
-                //embedTrack(track);
+                setTimeout(function(){ 
+                    displayTrack(track); //first argument of setTimeout needs to be a an anonymous function. I warpped
+                }, 2000);             //the checkState() in it and the timeout worked
             });
             upload.request.addEventListener('progress', function(event){ //show progress
                 var progressPercent = (event.loaded / event.total) * 100;
@@ -100,14 +100,23 @@ $(document).ready(function(){
         });
     });
     
-    function embedTrack(track) {
-        return setTimeout(checkState(track), 5000);
+    function displayTrack(track) {
+        var finished = checkState(track);
+        if (finished){
+            embed(track);
+        }
+        else {
+            console.log('displayTrack: false');
+        }
     }
     
     function checkState(track) {
-        SC.get(track).then(function(t){
+        var trackID = 'tracks/' + track.id;
+        SC.get(trackID).then(function(t){  //permalink_url & uri is 406. id & permalink is 404
                 if (t.state == "processing"){
-                   setTimeout(embedTrack(track), 5000); 
+                   setTimeout(function(){
+                       embedTrack(track);
+                   }, 2000);
                     console.log("poop");
                     }
                 else if (t.state == "finished"){
@@ -115,7 +124,7 @@ $(document).ready(function(){
                     return true;
                 }
                 else {
-                    alert('state is at "failed"');
+                    console.log('state is at "failed"');
                     return false;
                 }  
             }).catch(function(){
@@ -123,6 +132,17 @@ $(document).ready(function(){
         });
     }
 
+    function embed(track) {
+        SC.oEmbed(track.permalink_url, {
+            auto_play: true,
+            iframe: true,
+            element: elementLoc
+        }).then(function(embed){
+          console.log('oEmbed response: ', embed);
+            elementLoc.html(oEmbed.html);
+        });
+    }
+    
 //    function embedTrack(track) {
 //        var elementLoc = $('.track');
 //        var trackState = track.state;
