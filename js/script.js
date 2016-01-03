@@ -84,10 +84,11 @@ $(document).ready(function(){
             });
             $('.progress-bar').text('Uploading...'); 
             upload.then(function(track){ //upload
-                console.log('TRACK UPLOADED: ' + track + track.permalink_url);
                 $('.track').append('<a href="' + track.permalink_url + '">' + track.title + '</a>')
                 alert('Upload is done! Check your sound at ' + track.permalink_url);
-                embedTrack(track);
+                
+                setTimeout(function(){checkState(track);}, 10000);
+                //embedTrack(track);
             });
             upload.request.addEventListener('progress', function(event){ //show progress
                 var progressPercent = (event.loaded / event.total) * 100;
@@ -100,40 +101,56 @@ $(document).ready(function(){
     });
     
     function embedTrack(track) {
-        var elementLoc = $('.track');
-        var trackState = track.state;
-        var testState;
-        do {
-            var checkTrack = SC.get(track.id).then(function(t){
-                testState = t.state;
-            }).catch(function(){
-                alert('nope')
-            });
-                trackState = testState;
-                console.log('poopers');
-        }
-        while (trackState == "processing");
-        
-        if (trackState == "finished"){
-            SC.oEmbed(track.permalink_url, {
-                auto_play: true,
-                iframe: true,
-                element: elementLoc
-            }).then(function(embed){
-              console.log('oEmbed response: ', embed);
-                elementLoc.html(oEmbed.html);
-            });
-        }
-        if (trackState == "failed"){
-            alert('failed processing :(');
-        }
-        
-        console.log(track.state);
-        
-        
-        
-
+        return setTimeout(checkState(track), 5000);
     }
+    
+    function checkState(track) {
+        SC.get(track).then(function(t){
+                if (t.state == "processing"){
+                   setTimeout(embedTrack(track), 5000); 
+                    console.log("poop");
+                    }
+                else if (t.state == "finished"){
+                    alert('It worked! Embed away!');
+                    return true;
+                }
+                else {
+                    alert('state is at "failed"');
+                    return false;
+                }  
+            }).catch(function(){
+                alert('nope');
+        });
+    }
+
+//    function embedTrack(track) {
+//        var elementLoc = $('.track');
+//        var trackState = track.state;
+//        var testState;
+//        do {
+//            SC.get(track.id).then(function(t){
+//                testState = t.state;
+//            }).catch(function(){
+//                alert('nope')
+//            });
+//                trackState = testState;
+//        }
+//        while (trackState == "processing");
+//        
+//        if (trackState == "finished"){
+//            SC.oEmbed(track.permalink_url, {
+//                auto_play: true,
+//                iframe: true,
+//                element: elementLoc
+//            }).then(function(embed){
+//              console.log('oEmbed response: ', embed);
+//                elementLoc.html(oEmbed.html);
+//            });
+//        }
+//        if (trackState == "failed"){
+//            alert('failed processing :(');
+//        }
+//    }
     
 
         
