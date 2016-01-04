@@ -61,7 +61,7 @@ $(document).ready(function(){
         setTimeout(function(){
             recorder.stop();
             recorder.play();
-        }, 1000)
+        }, 10000)
     });
     //stop recording
     $('.stop-btn').click(function() {
@@ -87,7 +87,9 @@ $(document).ready(function(){
                 $('.track').append('<a href="' + track.permalink_url + '">' + track.title + '</a>')
                 alert('Upload is done! Check your sound at ' + track.permalink_url);
                 setTimeout(function(){ 
-                    displayTrack(track); //first argument of setTimeout needs to be a an anonymous function. I warpped
+                    checkState(track, function(t){
+                        displayTrack(track, t);
+                    });  //first argument of setTimeout needs to be a an anonymous function. I warpped
                 }, 2000);             //the checkState() in it and the timeout worked
             });
             upload.request.addEventListener('progress', function(event){ //show progress
@@ -99,49 +101,42 @@ $(document).ready(function(){
             console.log('Upload Failed :(');
         });
     });
+
     
-    function displayTrack(track) {
-        checkState(track, function(t){
-            if (t.state == "processing"){
-               setTimeout(function(){
-                   checkState(track);
-               }, 2000);
-                console.log("poop");
-                }
-            else if (t.state == "finished"){
-                console.log('It worked! Embed away!');
-                embed(track);
-                return true;
-            }
-            else {
-                console.log('state is at "failed"');
-                return false;
-            }  
-        }); 
-//        if (finished){
-//            embed(track);
-//        }
-//        else if (!finished){
-//            console.log('not finished');
-//        }
-//        else {
-//            console.log('I dunno');
-//        }
-    }
-    
-    function checkState (track, callback){
+    function checkState(track, callback) {
         var trackID = 'tracks/' + track.id;
         SC.get(trackID).then(function(t){
             callback(t);
         });
     }
     
+    function displayTrack(track, t) {
+        if (t.state == "processing"){
+            console.log("poop");
+            setTimeout(function(){
+               checkState(track, function(t){
+                   displayTrack(track, t);
+               });
+           }, 2000);
+        }
+        else if (t.state == "finished"){
+            console.log('It worked! Embed away!');
+            embed(track);
+            return true;
+        }
+        else {
+            console.log('state is at "failed"');
+            return false;
+        }  
+    }
+    
     function embed(track) {
         var elementLoc = $('.player');
         SC.oEmbed(track.permalink_url, {
             auto_play: true,
-            maxwidth: 500,
-            maxheight: 250,
+            maxwidth: 400,
+            maxheight: 200,
+            show_comments: true,
             iframe: true
         }).then(function(embed){
           console.log('oEmbed response: ', embed);
