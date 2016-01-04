@@ -2,7 +2,7 @@
 function localInit() {
     SC.initialize({
         client_id: 'a0fbfae5a13e2f9785418bede98cad8d',
-        redirect_uri: 'http://127.0.0.1:49392/callback.html'
+        redirect_uri: 'http://127.0.0.1:56563/callback.html'
     });
 }
 
@@ -101,7 +101,23 @@ $(document).ready(function(){
     });
     
     function displayTrack(track) {
-        var finished = checkState(track);
+        var finished = checkState(track, function(t){
+            if (t.state == "processing"){
+               setTimeout(function(){
+                   checkState(track);
+               }, 2000);
+                console.log("poop");
+                }
+            else if (t.state == "finished"){
+                console.log('It worked! Embed away!');
+                embed(track);
+                return true;
+            }
+            else {
+                console.log('state is at "failed"');
+                return false;
+            }  
+        }); 
         if (finished){
             embed(track);
         }
@@ -113,38 +129,49 @@ $(document).ready(function(){
         }
     }
     
-    function checkState(track) {
+    function checkState (track, callback){
         var trackID = 'tracks/' + track.id;
-        SC.get(trackID).then(function(t){  //permalink_url & uri is 406. id & permalink is 404
-                if (t.state == "processing"){
-                   setTimeout(function(){
-                       checkState(track);
-                   }, 2000);
-                    console.log("poop");
-                    }
-                else if (t.state == "finished"){
-                    alert('It worked! Embed away!');
-                    return true;
-                }
-                else {
-                    console.log('state is at "failed"');
-                    return false;
-                }  
-            }).catch(function(){
-                alert('nope');
+        SC.get(trackID).then(function(t){
+            callback(t);
         });
     }
+    
+//    function checkState(track) {
+//        var trackID = 'tracks/' + track.id,
+//        SC.get(trackID).then(function(t){  //permalink_url & uri is 406. id & permalink is 404
+//                if (t.state == "processing"){
+//                   setTimeout(function(){
+//                       checkState(track);
+//                   }, 2000);
+//                    console.log("poop");
+//                    }
+//                else if (t.state == "finished"){
+//                    alert('It worked! Embed away!');
+//                    return true;
+//                }
+//                else {
+//                    console.log('state is at "failed"');
+//                    return false;
+//                }  
+//            }).catch(function(){
+//                alert('nope');
+//        });
+//    }
 
     function embed(track) {
+        var elementLoc = $('.player');
         SC.oEmbed(track.permalink_url, {
             auto_play: true,
-            iframe: true,
-            element: elementLoc
+            iframe: true
         }).then(function(embed){
           console.log('oEmbed response: ', embed);
-            elementLoc.html(oEmbed.html);
+            elementLoc.html(embed.html);
         });
     }
+    
+
+    
+
     
 //    function embedTrack(track) {
 //        var elementLoc = $('.track');
