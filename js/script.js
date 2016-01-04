@@ -101,7 +101,7 @@ $(document).ready(function(){
     });
     
     function displayTrack(track) {
-        var finished = checkState(track, function(t){
+        checkState(track, function(t){
             if (t.state == "processing"){
                setTimeout(function(){
                    checkState(track);
@@ -118,15 +118,15 @@ $(document).ready(function(){
                 return false;
             }  
         }); 
-        if (finished){
-            embed(track);
-        }
-        else if (!finished){
-            console.log('not finished');
-        }
-        else {
-            console.log('I dunno');
-        }
+//        if (finished){
+//            embed(track);
+//        }
+//        else if (!finished){
+//            console.log('not finished');
+//        }
+//        else {
+//            console.log('I dunno');
+//        }
     }
     
     function checkState (track, callback){
@@ -135,6 +135,19 @@ $(document).ready(function(){
             callback(t);
         });
     }
+    
+    function embed(track) {
+        var elementLoc = $('.player');
+        SC.oEmbed(track.permalink_url, {
+            auto_play: true,
+            maxwidth: 500,
+            maxheight: 250,
+            iframe: true
+        }).then(function(embed){
+          console.log('oEmbed response: ', embed);
+            elementLoc.html(embed.html);
+        });
+    }   
     
 //    function checkState(track) {
 //        var trackID = 'tracks/' + track.id,
@@ -158,65 +171,6 @@ $(document).ready(function(){
 //        });
 //    }
 
-    function embed(track) {
-        var elementLoc = $('.player');
-        SC.oEmbed(track.permalink_url, {
-            auto_play: true,
-            iframe: true
-        }).then(function(embed){
-          console.log('oEmbed response: ', embed);
-            elementLoc.html(embed.html);
-        });
-    }
-    
 
-    
-
-    
-//    function embedTrack(track) {
-//        var elementLoc = $('.track');
-//        var trackState = track.state;
-//        var testState;
-//        do {
-//            SC.get(track.id).then(function(t){
-//                testState = t.state;
-//            }).catch(function(){
-//                alert('nope')
-//            });
-//                trackState = testState;
-//        }
-//        while (trackState == "processing");
-//        
-//        if (trackState == "finished"){
-//            SC.oEmbed(track.permalink_url, {
-//                auto_play: true,
-//                iframe: true,
-//                element: elementLoc
-//            }).then(function(embed){
-//              console.log('oEmbed response: ', embed);
-//                elementLoc.html(oEmbed.html);
-//            });
-//        }
-//        if (trackState == "failed"){
-//            alert('failed processing :(');
-//        }
-//    }
-    
-
-        
-
-    
-    
-
-    
-    
-
-    
-    
 });
 
-//embeds a SC player
-   /*SC.oEmbed(track_url, { auto_play: false, iframe: true, maxwidth: 800, maxheight: 200 }, function(oEmbed) {
-  console.log('oEmbed response: ', oEmbed);
-       player.html(oEmbed.html);
-   }); */
