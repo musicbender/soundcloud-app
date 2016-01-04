@@ -18,11 +18,11 @@ localInit(); //WHICH INIT: LOCAL FOR DEV or PUBLISHED ON GITHUB?
 $(document).ready(function(){
     var getUserMedia = navigator.getUserMedia ||
                    navigator.webkitGetUserMedia ||
-                   navigator.mozGetUserMedia;
-    var audioContext = new (AudioContext || webkitAudioContext || mozAudioCntext)();
-    var recorder;
-    var userMediaStream;
-    console.log(SC);
+                   navigator.mozGetUserMedia,
+        audioContext = new (AudioContext || webkitAudioContext || mozAudioCntext)(),
+        recorder,
+        userMediaStream,
+        progressBar = $('.progress-bar');
     
     //authenticate and display users information
     $('.connect').click(function(e) {
@@ -73,9 +73,6 @@ $(document).ready(function(){
     });
     //Upload into soundcloud
     $('.upload-btn').click(function() {
-        console.log('upload clicked');
-        var thisTrack;
-        
         recorder.getWAV().then(function(wav){ //turn into Blob wav
             var upload = SC.upload({
                 file: wav,
@@ -88,14 +85,14 @@ $(document).ready(function(){
                 alert('Upload is done! Check your sound at ' + track.permalink_url);
                 setTimeout(function(){ 
                     checkState(track, function(t){
-                        displayTrack(track, t);
+                        useState(track, t);
                     });  //first argument of setTimeout needs to be a an anonymous function. I warpped
                 }, 2000);             //the checkState() in it and the timeout worked
             });
             upload.request.addEventListener('progress', function(event){ //show progress
                 var progressPercent = (event.loaded / event.total) * 100;
                 console.log('Progress: ', progressPercent + '%' + 'loaded: ' + event.loaded);
-                $('.progress-bar').text('Progress: ' + progressPercent + '%');;
+                progressBar.text('Progress: ' + progressPercent + '%');;
             });
         }).catch(function(){
             console.log('Upload Failed :(');
@@ -110,23 +107,22 @@ $(document).ready(function(){
         });
     }
     
-    function displayTrack(track, t) {
+    function useState(track, t) {
         if (t.state == "processing"){
-            console.log("poop");
+            console.log("processing");
+            progressBar.text('Processing track...');
             setTimeout(function(){
                checkState(track, function(t){
-                   displayTrack(track, t);
+                   useState(track, t);
                });
            }, 2000);
         }
         else if (t.state == "finished"){
-            console.log('It worked! Embed away!');
+            progressBar.text('Finished!');
             embed(track);
-            return true;
         }
         else {
-            console.log('state is at "failed"');
-            return false;
+            progressBar.text('Failed to embed your track. Please visit your link to see it on Soundcloud');
         }  
     }
     
@@ -139,33 +135,9 @@ $(document).ready(function(){
             show_comments: true,
             iframe: true
         }).then(function(embed){
-          console.log('oEmbed response: ', embed);
+            console.log('oEmbed response: ', embed);
             elementLoc.html(embed.html);
         });
     }   
-    
-//    function checkState(track) {
-//        var trackID = 'tracks/' + track.id,
-//        SC.get(trackID).then(function(t){  //permalink_url & uri is 406. id & permalink is 404
-//                if (t.state == "processing"){
-//                   setTimeout(function(){
-//                       checkState(track);
-//                   }, 2000);
-//                    console.log("poop");
-//                    }
-//                else if (t.state == "finished"){
-//                    alert('It worked! Embed away!');
-//                    return true;
-//                }
-//                else {
-//                    console.log('state is at "failed"');
-//                    return false;
-//                }  
-//            }).catch(function(){
-//                alert('nope');
-//        });
-//    }
-
-
 });
 
