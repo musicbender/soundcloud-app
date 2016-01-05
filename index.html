@@ -6,36 +6,43 @@
     
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.20.0.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/main.css">
     
     <script src="js/jquery-1.11.3.min.js" defer></script>
     <script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js" defer></script>
     <script src="http://code.jquery.com/qunit/qunit-1.20.0.js" defer></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous" defer></script>
     <script src="js/script.js" defer></script>
 </head>
 <body>
-   <section class="user-info">
+    <section class="sign-in">
+    </section>
+   
+    <section class="top-section">
+    <div class="user-info">
        <a href="#" class="connect">Connect</a>
-       <ul class="info-list">
-           <li>Username: <span id="username"></span></li>
-           <li>Name: <span id="first-name"> </span><span id="last-name"></span></li>
-           <li>City: <span id="city"></span></li> 
-           <li>Track Count: <span id="track-count"></span></li>
-           <li>Soundcloud Plan: <span id="sc-plan"></span></li>
-       </ul>
+       <div class="greeting">
+           Hey <span class="username"></span>! Let's make some noise.</li>
+       </div>
+    </div>
+       <P class="stop-btn">Stop</P>
+       <p class="delete-btn">Delete</p>
+   </section>
+   <section class="record-section">
+        <div class="record-section-rel">
+            <div class="record-btn-outter">
+                <div class="record-btn"></div>
+            </div>
+        </div>
+
+       
+       <div class="progress-bar"><span class="progress"></span></div>
    </section>
    
-   <section class="recorder">
-       <p class="record-btn m-btn">Record</p>
-       <P class="stop-btn m-btn">Stop</P>
-       <p class="play-btn m-btn">Play</p>
-       <p class="delete-btn m-btn">Delete</p>
-       <p class="upload-btn m-btn">Upload</p>
-       <p class="progress-bar"><span class="progress"></span></p>
-       <div class='track'></div>
+   <section class="widget-section">
    </section>
-   
-   <section class="player"></section>
     
 </body>
 </html>

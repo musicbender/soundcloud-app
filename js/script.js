@@ -29,16 +29,10 @@ $(document).ready(function(){
         //e.preventDefault();
         
         SC.connect().then(function() {
-            console.log('PASSED');
+            console.log('AUTHENTICATION PASSED');
             return SC.get('/me');
         }).then(function(me) {
-                console.log('DEBUG:' + me);
-                $('#username').text(me.username);
-                $('#first-name').text(me.first_name);
-                $('#last-name').text(me.last_name);
-                $('#city').text(me.city);
-                $('#track-count').text(me.track_count);
-                $('#sc-plan').text(me.plan);
+                $('.username').text(me.username);
         }).catch(function(error) {
             console.log(error);
         });
@@ -55,22 +49,17 @@ $(document).ready(function(){
     $('.record-btn').click(function(){
         var streamSource = audioContext.createMediaStreamSource(userMediaStream);
         recorder = new SC.Recorder({context: audioContext, source: streamSource});
-        console.log(recorder);
-        console.log(SC.Recorder);
         recorder.start();
         setTimeout(function(){
             recorder.stop();
-            recorder.play();
-        }, 10000)
+        }, 600000) //10 minute limit
+        console.log(recorder);
     });
     //stop recording
     $('.stop-btn').click(function() {
         recorder.stop();
     });
-    //playback recording
-    $('.play-btn').click(function() {
-        recorder.play();
-    });
+
     //Upload into soundcloud
     $('.upload-btn').click(function() {
         recorder.getWAV().then(function(wav){ //turn into Blob wav
@@ -127,7 +116,7 @@ $(document).ready(function(){
     }
     
     function embed(track) {
-        var elementLoc = $('.player');
+        var widget = $('.widget-section');
         SC.oEmbed(track.permalink_url, {
             auto_play: true,
             maxwidth: 400,
@@ -136,7 +125,7 @@ $(document).ready(function(){
             iframe: true
         }).then(function(embed){
             console.log('oEmbed response: ', embed);
-            elementLoc.html(embed.html);
+            widget.html('<div class="widget">' + embed.html + '</div>');
         });
     }   
 });
