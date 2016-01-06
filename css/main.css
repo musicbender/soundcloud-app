@@ -85,17 +85,14 @@ html, body {
     display: inline-block;
 }
 
+.track-name {
+    color: black;
+    padding: 0;
+}
+
 .track-name[type="text"] {
-    display: inline-block;
     width: 33%;
-    padding-left: 5px;
 }
-
-.glyphicon {
-    font-size: 3em;
-}
-
-
 
 /*Record Button*/
 
@@ -150,7 +147,7 @@ html, body {
     padding: 0;
     width: 60%;
     height: 60%;
-    background-color: #EB6772;
+    background-color: darkgrey;
     border-radius: 100%;
 /*    pointer-events: none;*/
 }
@@ -165,13 +162,6 @@ html, body {
     border-radius: 0;
 }
 
-.record-btn-4:hover {
-    cursor: pointer;
-}
-
-.stop-btn:hover {
-    cursor: pointer;
-}
 
 .upload-btn {
     display: none;
@@ -185,14 +175,20 @@ html, body {
 
 .play-btn {
     position: relative;
-    top: -200px;
+    top: -195px;
     left: -175px;
+    font-size: 3em;
+    height: 20px;
+    height: 20px;
 }
 
 .delete-btn {
     position: relative;
-    top: -242px;
-    left: 175px;
+    top: -195px;
+    left: 286px;
+    font-size: 3em;
+    width: 20px;
+    height: 20px;
 }
 
 /*Widget Section*/
@@ -204,4 +200,4 @@ html, body {
     background-color: #F1EFF2
 }
 
-/*colors: beige:#D6CFCA red:#BE6772 light:#F1EFF2 darkbrown:#554C5A brown:#A38F86 rec-red:#EB6772 */
+/*colors: beige:#D6CFCA red:#BE6772 light:#F1EFF2 darkbrown:#554C5A brown:#A38F86 rec-red:#EB6772 hover-rec-red:#F25B6E */

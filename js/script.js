@@ -24,7 +24,7 @@ $(document).ready(function(){
         userMediaStream,
         progressBar = $('.progress-bar');
     
-    //authenticate and display users information
+    //Authenticate and display users information
     $('.connect').click(function(e) {
         //e.preventDefault();
         
@@ -36,6 +36,7 @@ $(document).ready(function(){
             $('.sign-in').hide();
             $('.greeting').show();
             $('.controls').show();
+            $('.record-btn-4').css('background-color', '#EB6772');
         }).catch(function(error) {
             console.log(error);
         });
@@ -47,7 +48,8 @@ $(document).ready(function(){
     }, function(error){
       alert('There was a problem in getting the video and audio stream from your device. Did you block the access?');
     });
-
+    
+//BUTTON EVENTS
     //Press buttons and using SC.Recorder
     $('.record-section').on('click', '.record-btn-4', function() {
         var streamSource = audioContext.createMediaStreamSource(userMediaStream);
@@ -56,30 +58,30 @@ $(document).ready(function(){
         $(this).removeClass('record-btn-4').addClass('stop-btn');
         setTimeout(function(){
             recorder.stop();
-        }, 1000) //10 minute limit
+        }, 600000) //10 minute limit
         $('.record-section').off('click', '.record-btn-4');
     });
     
     //Stop Recording
     $('.record-section').on('click', '.stop-btn', function() {
-//        recorder.stop();
-        console.log('clicked');
+        recorder.stop();
         $('.stop-btn').hide();
         $('.upload-btn').show();
-        });
+    });
     
     //play recording
     $('.play-btn').on('click', function(){
             recorder.play();
-        });
+    });
 
-    //Upload into soundcloud
+    //Upload into soundcloud and embed track
     $('.record-section').on('click', '.upload-btn', function() {
+        var userTitle = $('.track-name').val();
         recorder.getWAV().then(function(wav){ //turn into Blob wav
             var upload = SC.upload({
                 file: wav,
                 sharing: 'public',
-                title: 'Soundcloud API Test',
+                title: userTitle
             });
             $('.progress-bar').text('Uploading...'); 
             upload.then(function(track){ //upload
@@ -101,6 +103,30 @@ $(document).ready(function(){
         });
     });
 
+    //Hover events
+    $('.record-btn-4, .stop-btn').mouseenter(function(){
+        $(this).css('background-color', 'red');
+        $(this).css('cursor', 'pointer');
+    });
+    $('.record-btn-4, .stop-btn').mouseleave(function(){
+        $(this).css('background-color', '#EB6772');
+        $(this).css('cursor', 'default');
+    });
+    $('.upload.btn').mouseenter(function(){
+        $(this).css('color', 'red');
+        $(this).css('cursor', 'pointer');
+    });
+    $('.upload-btn').mouseleave(function(){
+        $(this).css('color', '#EB6772');
+        $(this).css('cursor', 'default');
+    });
+    $('.play-btn, .delete-btn').mouseenter(function(){
+        $(this).css('cursor', 'pointer');
+    });
+    $('.play-btn, .delete-btn').mouseleave(function(){
+        $(this).css('cursor', 'default');
+    });
+    
     
     function checkState(track, callback) {
         var trackID = 'tracks/' + track.id;
