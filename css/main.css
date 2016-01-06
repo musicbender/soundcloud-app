@@ -1,9 +1,12 @@
+* {
+    font-family: 'Roboto';
+}
+
 html, body {
     margin: 0;
     padding: 0;
     -webkit-font-smoothing: antialiased;
     text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
-
 }
 
 /*Top Section*/
@@ -13,6 +16,79 @@ html, body {
     height: 400px;
     background-image: url("/images/record-background-red.jpg");
     background-size: cover;
+    font-family: Roboto;
+    color: white;
+}
+
+/*Sign In*/
+
+.sign-in {
+    max-width: 50%;
+    height: 200px;
+    margin: -24px auto;
+    text-align: center;
+    background-color: #F1EFF2;
+    color: #554C5A;
+    font-family: 'Roboto';
+    border-radius: 10px;
+    -webkit-box-shadow: 5px 5px 11px 0px rgba(31,31,31,0.38);
+    -moz-box-shadow: 5px 5px 11px 0px rgba(31,31,31,0.38);
+    box-shadow: 5px 5px 11px 0px rgba(31,31,31,0.38);
+}
+
+.sign-in-text {
+    margin: 10px auto 0 auto;
+    padding: 1px 0 0 0;
+    line-height: 3%;
+    vertical-align: middle;
+}
+
+.text-first {
+    margin-bottom: 38px;
+}
+
+.sign-in-btn {
+    margin: 10px auto;
+}
+
+/*Header*/
+.header {
+    width: 100%;
+    height: 50px;
+    margin: 0 auto;
+}
+
+.greeting {
+    display: none;
+    float: left;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-family: Roboto;
+    font-size: 1.2em;
+}
+/*Controls*/
+
+.controls {
+    display: none;
+    width: 100%;
+}
+
+.control-form {
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    top: 150px;
+}
+
+.form-text {
+    display: inline-block;
+}
+
+.track-name[type="text"] {
+    display: inline-block;
+    width: 33%;
+    padding-left: 5px;
 }
 
 /*Record Button*/
@@ -30,7 +106,6 @@ html, body {
 .record-section-rel {
     width: 100%;
     height: 100%;
-    border: 2px solid #7F8C8D;
     border-radius: 95%;
     position: relative;
 }

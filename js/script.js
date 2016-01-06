@@ -2,7 +2,7 @@
 function localInit() {
     SC.initialize({
         client_id: 'a0fbfae5a13e2f9785418bede98cad8d',
-        redirect_uri: 'http://127.0.0.1:56563/callback.html'
+        redirect_uri: 'http://127.0.0.1:49792/callback.html'
     });
 }
 
@@ -32,7 +32,11 @@ $(document).ready(function(){
             console.log('AUTHENTICATION PASSED');
             return SC.get('/me');
         }).then(function(me) {
-                $('.username').text(me.username);
+            $('.username').text(me.username);
+            $('.sign-in').hide();
+            $('.greeting').show();
+            $('.controls').show();
+            
         }).catch(function(error) {
             console.log(error);
         });

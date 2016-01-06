@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <title>Soundcloud App</title>
     
-    <link rel="stylesheet" href="css/normalize.css">
+<!--    <link rel="stylesheet" href="css/normalize.css">-->
     <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.20.0.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="css/main.css">
     
     <script src="js/jquery-1.11.3.min.js" defer></script>
@@ -17,18 +18,27 @@
     <script src="js/script.js" defer></script>
 </head>
 <body>
-    <section class="sign-in">
-    </section>
-   
     <section class="top-section">
-    <div class="user-info">
-       <a href="#" class="connect">Connect</a>
-       <div class="greeting">
-           Hey <span class="username"></span>! Let's make some noise.</li>
+       <div class="header">
+            <div class="greeting">
+                Hey <span class="username"></span>!</li>
+            </div> 
        </div>
-    </div>
-       <P class="stop-btn">Stop</P>
-       <p class="delete-btn">Delete</p>
+        <div class="sign-in">
+            <div class="sign-in-text">
+                <h2 class="text-first">First things first!</h2>
+                <p class="text-connect">Connect to Soundcloud right here:</p>
+            </div>
+            <a href="#" class="connect">
+                <img class="sign-in-btn" src="http://connect.soundcloud.com/2/btn-connect-sc-l.png" />
+            </a>
+        </div>
+        <div class="controls">
+            <form class="control-form">
+                <label for="track-id" class="form-text">Track Title</label>
+                <input type="text" class="track-name" id="track-id" placeholder="My Recording">
+            </form>
+        </div>
    </section>
    <section class="record-section">
         <div class="record-section-rel">
@@ -41,7 +51,6 @@
             </div>
         </div>
    </section>
-   
    <section class="widget-section">
    </section>
     
