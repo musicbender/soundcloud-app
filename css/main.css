@@ -1,7 +1,6 @@
 html, body {
     margin: 0;
     padding: 0;
-    background-color: #7F8C8D;
     -webkit-font-smoothing: antialiased;
     text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
 
@@ -12,7 +11,7 @@ html, body {
     margin: 0;
     width: 100%;
     height: 400px;
-    background-color: white;
+    background-color: #BE6772;
 }
 
 /*Record Button*/
@@ -22,6 +21,9 @@ html, body {
     width: 250px;
     height: 250px;
     text-align: center;
+    background-color: transparent;
+    position: relative;
+    top: -125px;
 }
 
 .record-section-rel {
@@ -30,24 +32,43 @@ html, body {
     border: 2px solid #7F8C8D;
     border-radius: 95%;
     position: relative;
-    top: -125px;
 }
 
-.record-btn-outter {
+.record-btn-1 {
+    margin: 0 auto;
     width: 100%;
     height: 100%;
-    background-color: white;
-    border: 3px solid #7F8C8D;
+    background-color: #D6CFCA;
+    border-radius: 100%;
+    float: right;
+}
+
+.record-btn-2 {
+    margin: 11px auto;
+    vertical-align: middle;
+    width: 90%;
+    height: 90%;
+    background-color: #F1EFF2;
+    border: 7px solid #A38F86;
     border-radius: 100%;
 }
 
-.record-btn {
-    margin: 23.5px auto;
+.record-btn-3 {
+    margin: 50px auto;
+    width: 50%;
+    height: 50%;
+    background-color: #D6CFCA;
+    border-radius: 100%;
+    overflow: hidden;
+}
+
+.record-btn-4 {
+    margin: 12px auto;
     vertical-align: middle;
     padding: 0;
-    width: 187.5px;
-    height: 187.5px;
-    background-color: #C0392B;
+    width: 75%;
+    height: 75%;
+    background-color: #EB6772;
     border-radius: 100%;
 }
 
@@ -57,5 +78,7 @@ html, body {
     margin: 0;
     width: 100%;
     height: 700px;
-    background-color: #7F8C8D;
+    background-color: #D6CFCA;
 }
+
+/*colors: beige:#D6CFCA red:#BE6772 light:#F1EFF2 darkbrown:#554C5A brown:#A38F86 rec-red:#EB6772 */
