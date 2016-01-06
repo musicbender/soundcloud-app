@@ -152,16 +152,35 @@ html, body {
     height: 60%;
     background-color: #EB6772;
     border-radius: 100%;
+/*    pointer-events: none;*/
+}
+
+.stop-btn {
+    margin: 20px auto;
+    vertical-align: middle;
+    padding: 0;
+    width: 60%;
+    height: 60%;
+    background-color: #EB6772;
+    border-radius: 0;
+}
+
+.record-btn-4:hover {
+    cursor: pointer;
+}
+
+.stop-btn:hover {
+    cursor: pointer;
 }
 
 .upload-btn {
     display: none;
     position: relative;
-    margin: 20px auto;
+    margin: 10px auto;
     vertical-align: middle;
     padding: 0;
     color: #EB6772;
-    font-size: 4.25em;
+    font-size: 4.5em;
 }
 
 .play-btn {

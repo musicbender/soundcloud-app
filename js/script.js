@@ -36,7 +36,6 @@ $(document).ready(function(){
             $('.sign-in').hide();
             $('.greeting').show();
             $('.controls').show();
-            
         }).catch(function(error) {
             console.log(error);
         });
@@ -50,22 +49,32 @@ $(document).ready(function(){
     });
 
     //Press buttons and using SC.Recorder
-    $('.record-btn').click(function(){
+    $('.record-section').on('click', '.record-btn-4', function() {
         var streamSource = audioContext.createMediaStreamSource(userMediaStream);
         recorder = new SC.Recorder({context: audioContext, source: streamSource});
         recorder.start();
+        $(this).removeClass('record-btn-4').addClass('stop-btn');
         setTimeout(function(){
             recorder.stop();
-        }, 600000) //10 minute limit
-        console.log(recorder);
+        }, 1000) //10 minute limit
+        $('.record-section').off('click', '.record-btn-4');
     });
-    //stop recording
-    $('.stop-btn').click(function() {
-        recorder.stop();
-    });
+    
+    //Stop Recording
+    $('.record-section').on('click', '.stop-btn', function() {
+//        recorder.stop();
+        console.log('clicked');
+        $('.stop-btn').hide();
+        $('.upload-btn').show();
+        });
+    
+    //play recording
+    $('.play-btn').on('click', function(){
+            recorder.play();
+        });
 
     //Upload into soundcloud
-    $('.upload-btn').click(function() {
+    $('.record-section').on('click', '.upload-btn', function() {
         recorder.getWAV().then(function(wav){ //turn into Blob wav
             var upload = SC.upload({
                 file: wav,
