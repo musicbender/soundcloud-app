@@ -78,7 +78,7 @@ html, body {
     margin: 0 auto;
     text-align: center;
     position: relative;
-    top: 150px;
+    top: 115px;
 }
 
 .form-text {
@@ -90,6 +90,12 @@ html, body {
     width: 33%;
     padding-left: 5px;
 }
+
+.glyphicon {
+    font-size: 3em;
+}
+
+
 
 /*Record Button*/
 
@@ -146,6 +152,28 @@ html, body {
     height: 60%;
     background-color: #EB6772;
     border-radius: 100%;
+}
+
+.upload-btn {
+    display: none;
+    position: relative;
+    margin: 20px auto;
+    vertical-align: middle;
+    padding: 0;
+    color: #EB6772;
+    font-size: 4.25em;
+}
+
+.play-btn {
+    position: relative;
+    top: -200px;
+    left: -175px;
+}
+
+.delete-btn {
+    position: relative;
+    top: -242px;
+    left: 175px;
 }
 
 /*Widget Section*/
