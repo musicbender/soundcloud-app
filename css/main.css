@@ -11,7 +11,8 @@ html, body {
     margin: 0;
     width: 100%;
     height: 400px;
-    background-color: #BE6772;
+    background-image: url("/images/record-background-red.jpg");
+    background-size: cover;
 }
 
 /*Record Button*/
