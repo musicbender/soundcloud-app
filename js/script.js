@@ -76,6 +76,8 @@ $(document).ready(function(){
 
     //Upload into soundcloud and embed track
     $('.record-section').on('click', '.upload-btn', function() {
+        $('.upload-btn').hide();
+        $('.spinner').show();
         var userTitle = $('.track-name').val();
         recorder.getWAV().then(function(wav){ //turn into Blob wav
             var upload = SC.upload({
@@ -146,8 +148,10 @@ $(document).ready(function(){
            }, 2000);
         }
         else if (t.state == "finished"){
-            progressBar.text('Finished!');
+            $('.spinner').hide();
+            $('.complete').show();
             embed(track);
+            
         }
         else {
             progressBar.text('Failed to embed your track. Please visit your link to see it on Soundcloud');
@@ -158,8 +162,8 @@ $(document).ready(function(){
         var widget = $('.widget-section');
         SC.oEmbed(track.permalink_url, {
             auto_play: true,
-            maxwidth: 400,
-            maxheight: 200,
+            maxwidth: 500,
+            maxheight: 225,
             show_comments: true,
             iframe: true
         }).then(function(embed){
