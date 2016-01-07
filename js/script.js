@@ -13,7 +13,7 @@ function githubInit() {
     });
 }
 
-localInit(); //WHICH INIT: LOCAL FOR DEV or PUBLISHED ON GITHUB?
+githubInitInit(); //WHICH INIT: LOCAL FOR DEV or PUBLISHED ON GITHUB?
 
 $(document).ready(function(){
     var getUserMedia = navigator.getUserMedia ||
@@ -67,6 +67,8 @@ $(document).ready(function(){
         recorder.stop();
         $('.stop-btn').hide();
         $('.upload-btn').show();
+        $('.play-btn').show();
+        $('.delete-btn').show();
     });
     
     //play recording
@@ -102,6 +104,8 @@ $(document).ready(function(){
             });
         }).catch(function(){
             console.log('Upload Failed :(');
+            $('.spinner').hide();
+            $('.failed').show();
         });
     });
 
@@ -114,7 +118,7 @@ $(document).ready(function(){
         $(this).css('background-color', '#EB6772');
         $(this).css('cursor', 'default');
     });
-    $('.upload.btn').mouseenter(function(){
+    $('.upload-btn').mouseenter(function(){
         $(this).css('color', 'red');
         $(this).css('cursor', 'pointer');
     });

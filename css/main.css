@@ -147,6 +147,7 @@ html, body {
     overflow: hidden;
 }
 
+/* Buttons and States*/
 .record-btn-4 {
     margin: 20px auto;
     vertical-align: middle;
@@ -192,7 +193,17 @@ html, body {
 .complete {
     display: none;
     position: relative;
-    margin: 10px auto;
+    margin: 9.75px auto;
+    vertical-align: middle;
+    padding: 0;
+    color: #EB6772;
+    font-size: 4.5em;
+}
+
+.failed {
+    display: none;
+    position: relative;
+    margin: 9.75px auto;
     vertical-align: middle;
     padding: 0;
     color: #EB6772;
@@ -200,6 +211,7 @@ html, body {
 }
 
 .play-btn {
+    display: none;
     position: relative;
     top: -195px;
     left: -175px;
@@ -209,6 +221,7 @@ html, body {
 }
 
 .delete-btn {
+    display: none;
     position: relative;
     top: -195px;
     left: 286px;
