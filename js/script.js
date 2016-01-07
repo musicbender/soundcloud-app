@@ -13,7 +13,7 @@ function githubInit() {
     });
 }
 
-githubInitInit(); //WHICH INIT: LOCAL FOR DEV or PUBLISHED ON GITHUB?
+githubInit(); //WHICH INIT: LOCAL FOR DEV or PUBLISHED ON GITHUB?
 
 $(document).ready(function(){
     var getUserMedia = navigator.getUserMedia ||
