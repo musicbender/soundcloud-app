@@ -81,7 +81,8 @@ $(document).ready(function(){
     $('.record-section').on('click', '.upload-btn', function() {
         $('.upload-btn').hide();
         $('.spinner').show();
-        var userTitle = $('.track-name').val();
+        var userTitle = getUserTitle();
+        console.log(userTitle);
         recorder.getWAV().then(function(wav){ //turn into Blob wav
             var upload = SC.upload({
                 file: wav,
@@ -175,6 +176,15 @@ $(document).ready(function(){
             console.log('oEmbed response: ', embed);
             widget.html('<div class="widget">' + embed.html + '</div>');
         });
-    }   
+    }  
+    
+    function getUserTitle() {
+        var title = $('.track-name').val();
+        if (title === undefined) {
+            return "My Recording";
+        }else {
+            return title; 
+        }
+    }
 });
 
