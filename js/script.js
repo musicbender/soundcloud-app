@@ -13,8 +13,8 @@ function githubInit() {
     });
 }
 
-//localInit(); //WHICH INIT: LOCAL FOR DEV or PUBLISHED ON GITHUB?
-githubInit();
+localInit(); //WHICH INIT: LOCAL FOR DEV or PUBLISHED ON GITHUB?
+//githubInit();
 
 $(document).ready(function(){
     var getUserMedia = navigator.getUserMedia ||
@@ -22,11 +22,10 @@ $(document).ready(function(){
                    navigator.mozGetUserMedia,
         audioContext = new (AudioContext || webkitAudioContext || mozAudioCntext)(),
         recorder,
-        userMediaStream,
-        progressBar = $('.progress-bar');
+        userMediaStream;
     
     //Authenticate and display users information
-    $('.connect').click(function(e) {
+    $('.connect').click(function() {
         //e.preventDefault();
         
         SC.connect().then(function() {
@@ -89,7 +88,7 @@ $(document).ready(function(){
                 sharing: 'public',
                 title: userTitle
             });
-            $('.progress-bar').text('Uploading...'); 
+            
             upload.then(function(track){ //upload
                 $('.track').append('<a href="' + track.permalink_url + '">' + track.title + '</a>')
                 alert('Upload is done! Check your sound at ' + track.permalink_url);
@@ -102,7 +101,6 @@ $(document).ready(function(){
             upload.request.addEventListener('progress', function(event){ //show progress
                 var progressPercent = (event.loaded / event.total) * 100;
                 console.log('Progress: ', progressPercent + '%' + 'loaded: ' + event.loaded);
-                progressBar.text('Progress: ' + progressPercent + '%');;
             });
         }).catch(function(){
             console.log('Upload Failed :(');
@@ -146,7 +144,7 @@ $(document).ready(function(){
     function useState(track, t) {
         if (t.state == "processing"){
             console.log("processing");
-            progressBar.text('Processing track...');
+            //progressBar.text('Processing track...');
             setTimeout(function(){
                checkState(track, function(t){
                    useState(track, t);
@@ -160,7 +158,7 @@ $(document).ready(function(){
             
         }
         else {
-            progressBar.text('Failed to embed your track. Please visit your link to see it on Soundcloud');
+            //progressBar.text('Failed to embed your track. Please visit your link to see it on Soundcloud');
         }  
     }
     
