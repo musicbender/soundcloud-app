@@ -2,7 +2,7 @@
 function localInit() {
     SC.initialize({
         client_id: 'a0fbfae5a13e2f9785418bede98cad8d',
-        redirect_uri: 'http://127.0.0.1:49542/callback.html'
+        redirect_uri: 'http://127.0.0.1:56841/callback.html'
     });
 }
 
@@ -26,10 +26,7 @@ $(document).ready(function(){
     
     //Authenticate and display users information
     $('.connect').click(function() {
-        //e.preventDefault();
-        
         SC.connect().then(function() {
-            console.log('AUTHENTICATION PASSED');
             return SC.get('/me');
         }).then(function(me) {
             $('.username').text(me.username);
@@ -59,6 +56,8 @@ $(document).ready(function(){
         setTimeout(function(){
             recorder.stop();
         }, 600000) //10 minute limit
+        $('.info').text('Recording!');
+        $('.control-form').hide();
         $('.record-section').off('click', '.record-btn-4');
     });
     
@@ -67,17 +66,19 @@ $(document).ready(function(){
         recorder.stop();
         $('.stop-btn').hide();
         $('.upload-btn').show();
-        $('.play-btn').show();
-        $('.delete-btn').show();
+//        $('.play-btn').show();
+//        $('.delete-btn').show();
+        $('.info').text('Recording finished. Now, press the upload button to upload it directly to your Soundcloud account!');
     });
     
     //play recording
-    $('.play-btn').on('click', function(){
-            recorder.play();
-    });
+//    $('.play-btn').on('click', function(){
+//            recorder.play();
+//    });
 
     //Upload into soundcloud and embed track
     $('.record-section').on('click', '.upload-btn', function() {
+        $('.info').text('Uploading to Soundcloud...');
         $('.upload-btn').hide();
         $('.spinner').show();
         var userTitle = getUserTitle();
@@ -91,7 +92,7 @@ $(document).ready(function(){
             
             upload.then(function(track){ //upload
                 $('.track').append('<a href="' + track.permalink_url + '">' + track.title + '</a>')
-                alert('Upload is done! Check your sound at ' + track.permalink_url);
+                $('.info').text('Upload complete. Processing track...');
                 setTimeout(function(){ 
                     checkState(track, function(t){
                         useState(track, t);
@@ -133,7 +134,6 @@ $(document).ready(function(){
         $(this).css('cursor', 'default');
     });
     
-    
     function checkState(track, callback) {
         var trackID = 'tracks/' + track.id;
         SC.get(trackID).then(function(t){
@@ -150,14 +150,13 @@ $(document).ready(function(){
                    useState(track, t);
                });
            }, 2000);
-        }
-        else if (t.state == "finished"){
+        } else if (t.state == "finished"){
+            $('info').text('Processing finished. Embedding track...');
             $('.spinner').hide();
             $('.complete').show();
             embed(track);
             
-        }
-        else {
+        } else {
             //progressBar.text('Failed to embed your track. Please visit your link to see it on Soundcloud');
         }  
     }
@@ -167,12 +166,13 @@ $(document).ready(function(){
         SC.oEmbed(track.permalink_url, {
             auto_play: true,
             maxwidth: 500,
-            maxheight: 225,
+            maxheight: 175,
             show_comments: true,
             iframe: true
         }).then(function(embed){
             console.log('oEmbed response: ', embed);
             widget.html('<div class="widget">' + embed.html + '</div>');
+            $('.info').text('Track embededed..ed. Check it out below!');
         });
     }  
     

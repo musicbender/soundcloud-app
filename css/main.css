@@ -75,9 +75,9 @@ html, body {
 }
 
 .instructions {
+    width: 70%;
     text-align: center;
-    margin: 0 auto;
-    
+    margin: 0 auto; 
 }
 
 .control-form {
@@ -110,6 +110,7 @@ html, body {
     background-color: transparent;
     position: relative;
     top: -125px;
+    overflow: hidden;
 }
 
 .record-section-rel {
@@ -210,6 +211,7 @@ html, body {
     font-size: 4.5em;
 }
 
+/*
 .play-btn {
     display: none;
     position: relative;
@@ -217,7 +219,10 @@ html, body {
     left: -175px;
     font-size: 3em;
     height: 20px;
-    height: 20px;
+}
+
+.play-btn:hover {
+    opacity: 0.5;
 }
 
 .delete-btn {
@@ -229,6 +234,7 @@ html, body {
     width: 20px;
     height: 20px;
 }
+*/
 
 /*Widget Section*/
 
@@ -236,11 +242,12 @@ html, body {
     margin: -250px auto;
     width: 100%;
     height: 700px;
-    background-color: #F1EFF2
+    background-color: #F1EFF2;
+    overflow: hidden;
 }
 
 .widget {
-    margin: 0 auto;
+    margin: 175px auto;
     width: 500px
 }
 
