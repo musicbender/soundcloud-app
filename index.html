@@ -2,19 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Soundcloud App</title>
+    <title>Soundcloud Uploader App</title>
     
 <!--    <link rel="stylesheet" href="css/normalize.css">-->
 <!--    <link rel="stylesheet" href="/css/font-awesome.min.css">-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/tooltipster.css">
     <link rel="stylesheet" href="css/main.css">
     
-    <script src="js/jquery-1.11.3.min.js" defer></script>
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="js/jquery.tooltipster.min.js"></script>
     <script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js" defer></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous" defer></script>
     <script src="js/script.js" defer></script>
+    
+    <!--Tooltipster-->
+    <script>
+        $(document).ready(function() {
+            $('.tooltip').tooltipster({
+                theme: 'tooltipster-default',
+                trigger: 'hover',
+                position: 'bottom-left'
+            });
+        });
+    </script>
 </head>
 <body>
     <section class="top-section">
@@ -22,6 +35,9 @@
             <div class="greeting">
                 Hey <span class="username"></span>!</li>
             </div> 
+            <div class="help tooltip" title="This app currently is not supported by IE or Safari :(">
+                <i class="fa fa-question"></i>
+            </div>
        </div>
         <div class="sign-in">
             <div class="sign-in-text">
