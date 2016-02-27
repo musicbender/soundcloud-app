@@ -82,7 +82,6 @@ $(document).ready(function(){
         $('.upload-btn').hide();
         $('.spinner').show();
         var userTitle = getUserTitle();
-        console.log(userTitle);
         recorder.getWAV().then(function(wav){ //turn into Blob wav
             var upload = SC.upload({
                 file: wav,
@@ -93,6 +92,9 @@ $(document).ready(function(){
             upload.then(function(track){ //upload
                 $('.track').append('<a href="' + track.permalink_url + '">' + track.title + '</a>')
                 $('.info').text('Upload complete. Processing track...');
+                setTimeout(function(){
+                    $('.soundcloud-is-slow').show();
+                }, 1000);
                 setTimeout(function(){ 
                     checkState(track, function(t){
                         useState(track, t);
@@ -174,14 +176,15 @@ $(document).ready(function(){
             console.log('oEmbed response: ', embed);
             widget.html('<div class="widget">' + embed.html + '</div>');
             $('.info').text('Track embededed..ed. Check it out below!');
+            $('.soundcloud-is-slow').hide();
         });
     }  
     
     function getUserTitle() {
         var title = $('.track-name').val();
-        if (title === undefined) {
+        if (title.length == 0) {
             return "My Recording";
-        }else {
+        } else {
             return title; 
         }
     }
