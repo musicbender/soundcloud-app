@@ -6,15 +6,15 @@ function localInit() {
     });
 }
 
-function githubInit() {
+function publishInit() {
         SC.initialize({
         client_id: 'a025d7ac04682146e46fab7dec6d02bd',
-        redirect_uri: 'https://musicbender.github.io/soundcloud-app/callback.html'
+        redirect_uri: 'https://soundcloud-recorder.patjacobs.io/callback.html'
     });
 }
 
 localInit(); //WHICH INIT: LOCAL FOR DEV or PUBLISHED ON GITHUB?
-//githubInit();
+//publishInit();
 
 $(document).ready(function(){
     var getUserMedia = navigator.getUserMedia ||
@@ -33,7 +33,7 @@ $(document).ready(function(){
             $('.sign-in').hide();
             $('.greeting').show();
             $('.controls').show();
-            $('.record-btn-4').css('background-color', '#EB6772');
+            $('.record-btn-main').addClass('record-btn-active');
         }).catch(function(error) {
             console.log(error);
         });
@@ -48,17 +48,17 @@ $(document).ready(function(){
     
 //BUTTON EVENTS
     //Press buttons and using SC.Recorder
-    $('.record-section').on('click', '.record-btn-4', function() {
+    $('.record-section').on('click', '.record-btn-active', function() {
         var streamSource = audioContext.createMediaStreamSource(userMediaStream);
         recorder = new SC.Recorder({context: audioContext, source: streamSource});
         recorder.start();
-        $(this).removeClass('record-btn-4').addClass('stop-btn');
+        $(this).removeClass('record-btn-main').addClass('stop-btn');
         setTimeout(function(){
             recorder.stop();
         }, 600000) //10 minute limit
         $('.info').text('Recording!');
         $('.control-form').hide();
-        $('.record-section').off('click', '.record-btn-4');
+        $('.record-section').off('click', '.record-btn-active');
     });
     
     //Stop Recording
@@ -111,11 +111,12 @@ $(document).ready(function(){
     });
 
     //Hover events
-    $('.record-btn-4, .stop-btn').mouseenter(function(){
+    $('.record-section').on('mouseenter', '.record-btn-active, .stop-btn', function(){
         $(this).css('background-color', 'red');
         $(this).css('cursor', 'pointer');
     });
-    $('.record-btn-4, .stop-btn').mouseleave(function(){
+        
+    $('.record-section').on('mouseleave', '.record-btn-active, .stop-btn', function(){
         $(this).css('background-color', '#EB6772');
         $(this).css('cursor', 'default');
     });

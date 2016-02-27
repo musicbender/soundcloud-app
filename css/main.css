@@ -172,7 +172,7 @@ html, body {
 }
 
 /* Buttons and States*/
-.record-btn-4 {
+.record-btn-main {
     margin: 20px auto;
     vertical-align: middle;
     padding: 0;
@@ -181,6 +181,10 @@ html, body {
     background-color: darkgrey;
     border-radius: 100%;
 /*    pointer-events: none;*/
+}
+
+.record-btn-active {
+    background-color: #EB6772;
 }
 
 .stop-btn {
