@@ -2,7 +2,7 @@
 function localInit() {
     SC.initialize({
         client_id: 'a0fbfae5a13e2f9785418bede98cad8d',
-        redirect_uri: 'http://127.0.0.1:56841/callback.html'
+        redirect_uri: 'http://127.0.0.1:57283/callback.html'
     });
 }
 
@@ -13,8 +13,8 @@ function publishInit() {
     });
 }
 
-localInit(); //WHICH INIT: LOCAL FOR DEV or PUBLISHED ON GITHUB?
-//publishInit();
+//localInit(); //WHICH INIT: LOCAL FOR DEV or PUBLISHED ON GITHUB?
+publishInit();
 
 $(document).ready(function(){
     var getUserMedia = navigator.getUserMedia ||
@@ -189,4 +189,6 @@ $(document).ready(function(){
         }
     }
 });
+
+
 
