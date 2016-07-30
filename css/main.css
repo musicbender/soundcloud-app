@@ -115,6 +115,10 @@ body {
     margin: 0 auto; 
 }
 
+.info {
+    font-size: 29px;
+}
+
 .soundcloud-is-slow {
     display: none;
     margin: 0 auto;
@@ -135,12 +139,13 @@ body {
 }
 
 .track-name {
+    margin: 0 auto;
     color: black;
     padding: 0;
 }
 
 .track-name[type="text"] {
-    width: 33%;
+    width: 55%;
     height: 45px;
     font-size: 24px;
     padding-left: 6px;
@@ -283,7 +288,7 @@ body {
 
 @media only screen and (max-width: 870px) {
     .info {
-        font-size: 30px;
+        font-size: 28px;
     }
 }
 
@@ -294,7 +299,7 @@ body {
 }
 @media only screen and (max-width: 550px) {
     .info {
-        font-size: 19px;
+        font-size: 18px;
     }
     .sign-in {
         max-width: 100%;
