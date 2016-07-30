@@ -272,4 +272,20 @@ body {
     width: 500px
 }
 
+@media only screen and (max-width: 550px) {
+    .sign-in {
+        max-width: 100%;
+        margin: 12px auto 0 auto;
+    }
+    .sign-in-btn {
+        width: 70%;
+    }
+}
+
+@media only screen and (max-width: 440px) {
+    .sign-in-btn {
+        width: 90%;
+    }
+}
+
 /*colors: beige:#D6CFCA red:#BE6772 light:#F1EFF2 darkbrown:#554C5A brown:#A38F86 rec-red:#EB6772 hover-rec-red:#F25B6E */
