@@ -130,6 +130,8 @@ body {
 
 .form-text {
     display: inline-block;
+    font-size: 24px;
+    padding: 6px;
 }
 
 .track-name {
@@ -139,6 +141,9 @@ body {
 
 .track-name[type="text"] {
     width: 33%;
+    height: 45px;
+    font-size: 24px;
+    padding-left: 6px;
 }
 
 /*Record Button*/
@@ -272,7 +277,25 @@ body {
     width: 500px
 }
 
+.widget iframe {
+    margin: -25px auto 0 auto;
+}
+
+@media only screen and (max-width: 870px) {
+    .info {
+        font-size: 30px;
+    }
+}
+
+@media only screen and (max-width: 718px) {
+    .info {
+        font-size: 23px;
+    }
+}
 @media only screen and (max-width: 550px) {
+    .info {
+        font-size: 19px;
+    }
     .sign-in {
         max-width: 100%;
         margin: 12px auto 0 auto;
@@ -280,7 +303,20 @@ body {
     .sign-in-btn {
         width: 70%;
     }
-}
+    .control-form {
+        margin: -105px auto;
+    }
+    .form-text {
+        display: block;
+        font-size: 18px;
+    }
+    .track-name {
+        display: block;
+    }
+    .track-name[type="text"] {
+        width: 95%;
+        font-size: 16px;
+    }
 
 @media only screen and (max-width: 440px) {
     .sign-in-btn {
